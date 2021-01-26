@@ -1,27 +1,33 @@
 //import Head from 'next/head';
 //import styles from '../styles/Home.module.css';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
-//import FacebookLogin from "react-facebook-login";
 import { Contenedor,
          Formulario } from "../components/esilos";
 import authContext from "../context/auth/authContext";
+import { useRouter } from "next/router";
 
 const Home = () => {
 
   const AuthContext = useContext(authContext);
-  //const { token, consultarApi } = AuthContext;
+  const { autenticado, agregandoUsuarioGoogle } = AuthContext;
+  const router = useRouter();
   
+  useEffect(() => {
+    if(autenticado){
+      router.push("/panelcontrol");
+    }
+  }, [autenticado])
 
-  const responseGoogle = googleUser => {
-    let profile = googleUser.getBasicProfile();
+  const responseGoogle = async googleUser => {
+    /*let profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    
+    */
     const id_token = googleUser.getAuthResponse().id_token;
-    //enviarToken(id_token);
+    await agregandoUsuarioGoogle(id_token);
   }
   return(
     <Contenedor className="wrapper">

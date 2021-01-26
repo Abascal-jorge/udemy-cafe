@@ -1,15 +1,18 @@
 import React from 'react';
 import Header from "./header";
 import AsidePanel from "./aside";
-//import { PanelPrincipal } from "./estilosPanel";
+import { PincipalPanel, PanelHeader } from "./estilosPanel";
 
 const Principal = () => {
     return (
         <>  
-            <div>
-                <Header/>
+            <PincipalPanel>
+                <PanelHeader>
+                    <Header/>
+                    <h2>Hola mundo</h2>
+                </PanelHeader>
                 <AsidePanel/>
-            </div>
+            </PincipalPanel>
         </>
      );
 }

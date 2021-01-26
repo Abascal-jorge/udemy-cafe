@@ -5,8 +5,10 @@ import { AUTENTICANDO_USUARIO,
 export default (state, action) => {
     switch (action.type) {
         case AUTENTICANDO_USUARIO:
+            localStorage.setItem("token", action.payload.token);
             return{
-                token: "hola mundo"
+                ...state,
+                autenticado: true
             }
         default:
             return;

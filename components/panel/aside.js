@@ -1,24 +1,30 @@
 import React from 'react';
-//import { AsideDiv } from "./estilosPanel";
+import { AsideDiv } from "./estilosPanel";
 
 
 const AsidePanel = () => {
     return ( 
-        <div>
+        <AsideDiv>
             <h2>Opciones</h2>
             <aside>
-                <ul>
-                    <li>
-                        <a>Productos</a>
-                        <ul>
-                            <li>Agregar</li>
-                            <li>Eliminar</li>
-                            <li>Actualizar</li>
-                        </ul>
-                    </li>
-                </ul>
+                <details>
+                    <summary>Productos</summary>
+                    <ul>
+                        <li>Agregar</li>
+                        <li>Eliminar</li>
+                        <li>Actualizar</li>
+                    </ul>
+                </details>
+                <details>
+                    <summary>Usuarios</summary>
+                    <ul>
+                        <li>Agregar</li>
+                        <li>Eliminar</li>
+                        <li>Actualizar</li>
+                    </ul>
+                </details>
             </aside>
-        </div>
+        </AsideDiv>
      );
 }
  
