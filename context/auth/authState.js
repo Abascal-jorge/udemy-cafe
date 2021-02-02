@@ -18,6 +18,8 @@ const AuthState = ({children}) => {
     const [ state, dispatch ] = useReducer(authReducer, initialState);
 
     const agregandoUsuarioGoogle = async (token) => {
+        console.log(token);
+        /*
         try {
             const url = "https://rest-cafe-udemy.herokuapp.com/google";
 
@@ -29,7 +31,7 @@ const AuthState = ({children}) => {
             });
         } catch (error) {
             console.log(error);
-        }
+        */
     }
 
     return ( 
