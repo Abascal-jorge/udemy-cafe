@@ -1,6 +1,7 @@
 module.exports = {
+  // https://rest-cafe-udemy.herokuapp.com
     env: {
-        backendURL: "https://rest-cafe-udemy.herokuapp.com",
+        backendURL:"http://localhost:4000",
         frontendURL: "http://localhost:3000"
     },
     async headers() {

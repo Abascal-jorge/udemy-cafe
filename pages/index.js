@@ -5,9 +5,23 @@ import { GoogleLogin } from 'react-google-login';
 import { Contenedor,
          Formulario } from "../components/esilos";
 import authContext from "../context/auth/authContext";
+import  socketIOClient from "socket.io-client";
 import { useRouter } from "next/router";
 
 const Home = () => {
+
+  ///////////////////////Socket configuration//////////////
+  const PORTServidor = "http://localhost:4000";
+  //console.log(socket);
+  useEffect( () => {
+    const socket = socketIOClient(PORTServidor);
+
+    socket.on("connect", () => {
+      console.log("Conectado desde froent end");
+    });
+
+  }, []);
+  /////////////////////////////////////////
 
   const AuthContext = useContext(authContext);
   const { autenticado, agregandoUsuarioGoogle } = AuthContext;

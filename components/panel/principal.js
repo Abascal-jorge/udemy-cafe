@@ -4,6 +4,7 @@ import AsidePanel from "./aside";
 import { PincipalPanel, PanelHeader } from "./estilosPanel";
 
 const Principal = () => {
+
     return (
         <>  
             <PincipalPanel>
