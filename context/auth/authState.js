@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import { AUTENTICANDO_USUARIO, 
-         MOSTRANDO_ALERTA} from "../../type/index";
+import { AUTENTICANDO_GOOGLE, 
+         AUTENTICADO_CORREO} from "../../type/index";
 import axios from "axios";
 
 
@@ -17,21 +17,31 @@ const AuthState = ({children}) => {
 
     const [ state, dispatch ] = useReducer(authReducer, initialState);
 
-    const agregandoUsuarioGoogle = async (token) => {
-        console.log(token);
-        /*
+    const iniciandoGoogle = async (token) => {
         try {
-            const url = "https://rest-cafe-udemy.herokuapp.com/google";
-
-            const resultado = await axios.post(url, {token}); 
-            
             dispatch({
-                type: AUTENTICANDO_USUARIO,
-                payload: resultado.data
+                type: AUTENTICANDO_GOOGLE,
+                payload: token
             });
         } catch (error) {
             console.log(error);
-        */
+        }
+    }
+
+    const iniciandoCorreo = async ( datos ) => {
+        try {   
+            const url = `${process.env.backendURL}/login`;
+            console.log(url);
+            const token = await axios.post(url, datos); 
+            console.log(token);
+            /*
+            distpach({
+                type: AUTENTICADO_CORREO,
+                payload: datos
+            });*/
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return ( 
@@ -39,7 +49,8 @@ const AuthState = ({children}) => {
             value = {
                 {   
                     autenticado: state.autenticado,
-                    agregandoUsuarioGoogle
+                    iniciandoGoogle,
+                    iniciandoCorreo
                 }
             }
         >
