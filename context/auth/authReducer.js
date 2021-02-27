@@ -1,18 +1,23 @@
 import { AUTENTICANDO_GOOGLE, 
-         AUTENTICADO_CORREO } from "../../type/index";
+         AUTENTICADO_CORREO, 
+         VALIDAR_TOKEN } from "../../type/index";
 
 
 export default (state, action) => {
     switch (action.type) {
         case AUTENTICANDO_GOOGLE:
-            localStorage.setItem("token", action.payload);
-            return{
-                ...state,
-                autenticado: true
-            }
         case AUTENTICADO_CORREO:
+            localStorage.setItem("token", action.payload.token);
             return{
                 ...state,
+                autenticado: true,
+                usuario: action.payload.usuario
+            }
+        case VALIDAR_TOKEN:
+            localStorage.setItem("token", action.payload.token);
+            return{
+                ...state,
+                usuario: action.payload.usuario,
                 autenticado: true
             }
         default:

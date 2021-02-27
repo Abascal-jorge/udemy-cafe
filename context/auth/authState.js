@@ -2,7 +2,8 @@ import React, { useReducer } from 'react';
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 import { AUTENTICANDO_GOOGLE, 
-         AUTENTICADO_CORREO} from "../../type/index";
+         AUTENTICADO_CORREO,
+         VALIDAR_TOKEN} from "../../type/index";
 import axios from "axios";
 
 
@@ -17,12 +18,20 @@ const AuthState = ({children}) => {
 
     const [ state, dispatch ] = useReducer(authReducer, initialState);
 
-    const iniciandoGoogle = async (token) => {
+    const iniciandoGoogle = async (id_token) => {
         try {
-            dispatch({
+
+           const url =  `${process.env.backendURL}/api/auth/google`;
+
+           //console.log( url );
+
+           const respuesta = await axios.post(url, {id_token});
+
+           dispatch({
                 type: AUTENTICANDO_GOOGLE,
-                payload: token
+                payload: respuesta.data
             });
+
         } catch (error) {
             console.log(error);
         }
@@ -30,15 +39,32 @@ const AuthState = ({children}) => {
 
     const iniciandoCorreo = async ( datos ) => {
         try {   
-            const url = `${process.env.backendURL}/login`;
-            console.log(url);
+            const url = `${process.env.backendURL}/api/auth/login`;
             const token = await axios.post(url, datos); 
-            console.log(token);
-            /*
-            distpach({
+            //console.log(token.data);
+            dispatch({
                 type: AUTENTICADO_CORREO,
-                payload: datos
-            });*/
+                payload: token.data
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const validarToken = async ( token ) => {
+
+        try {
+            const url = `${process.env.backendURL}/api/auth`;
+            const respuesta = await axios(url, {
+                headers: { "x-token": token}
+            });
+
+            //console.log(respuesta);
+    
+            dispatch({
+                type: VALIDAR_TOKEN,
+                payload: respuesta.data
+            });
         } catch (error) {
             console.log(error);
         }
@@ -49,8 +75,10 @@ const AuthState = ({children}) => {
             value = {
                 {   
                     autenticado: state.autenticado,
+                    usuario: state.usuario,
                     iniciandoGoogle,
-                    iniciandoCorreo
+                    iniciandoCorreo,
+                    validarToken
                 }
             }
         >

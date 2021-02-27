@@ -4,22 +4,18 @@ import React, { useEffect, useContext, useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { Contenedor,
          Formulario } from "../components/esilos";
-import io from "socket.io-client";
 import authContext from "../context/auth/authContext";
+import { useRouter } from 'next/router'
 
 const Home = () => {
+  const router = useRouter();
   //Context Funciones authState
   const AuthContext = useContext(authContext);
-  const { iniciandoGoogle, iniciandoCorreo } = AuthContext;
-  //////////////////////Socket configuration//////////////
-  const PORTServidor = process.env.backendURL;
-  const socket = io(PORTServidor);
+  const { iniciandoGoogle, 
+          iniciandoCorreo, 
+          validarToken, 
+          autenticado } = AuthContext;
 
-  socket.on("connect", () => {
-    console.log("Conectado desde froent end");
-  });
-
-  socket.emit("Mensaje", { mensaje: "Hola" });
 
   //UseState para recompilar los datos de los inputs
   const [ datos, setDatos ] = useState({
@@ -36,11 +32,8 @@ const Home = () => {
   }
 
   const onSubmitDatos = (e) => {
-  
       e.preventDefault();
-
       iniciandoCorreo(datos);
-  
   }
 
   const responseGoogle = googleUser => {
@@ -51,8 +44,18 @@ const Home = () => {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     */
     const id_token = googleUser.getAuthResponse().id_token;
+    //console.log(id_token);
     iniciandoGoogle( id_token );
   }
+
+  useEffect(() => {
+      if(autenticado){
+          router.push("/chat");
+      }if( localStorage.getItem("token") ){
+        //console.log( localStorage.getItem("token") );
+        validarToken( localStorage.getItem("token") );
+      }
+  }, [autenticado])
 
   return(
     <Contenedor className="wrapper">
