@@ -88,21 +88,24 @@ const SectionPrincipal = styled.section`
 
 `;
 
-const nuevacuenta = () => {
+const chatMensajes = () => {
 
     const AuthContext = useContext( authContext );
     const { usuario } = AuthContext;
     const { nombre, correo, img} = usuario;
 
+    
     //////////////////////Socket configuration//////////////
     const PORTServidor = process.env.backendURL;
     const socket = io(PORTServidor);
-
+ 
     socket.on("connect", () => {
         console.log("Conectado desde froent end");
     });
 
     socket.emit("Mensaje", { mensaje: "Hola" });
+    //fin socket
+
 
     return ( 
         <SectionPrincipal className="chat-section">
@@ -140,4 +143,4 @@ const nuevacuenta = () => {
      );
 }
  
-export default nuevacuenta;
+export default chatMensajes;

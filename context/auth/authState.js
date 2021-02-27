@@ -58,15 +58,13 @@ const AuthState = ({children}) => {
             const respuesta = await axios(url, {
                 headers: { "x-token": token}
             });
-
-            //console.log(respuesta);
     
             dispatch({
                 type: VALIDAR_TOKEN,
                 payload: respuesta.data
             });
         } catch (error) {
-            console.log(error);
+            console.log("Token no valido, no existe token");
         }
     }
 
