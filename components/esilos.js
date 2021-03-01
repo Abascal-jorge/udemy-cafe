@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const Contenedor = styled.div`
   max-width: 400px;
   margin: 100px auto;
-  background-color: white;
+  background-color: #eee;
   border-radius: 10px;
   -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
   -moz-box-shadow: 3px 3px 5px rgba(0,0,0,0.5);

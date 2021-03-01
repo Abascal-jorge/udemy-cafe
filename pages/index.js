@@ -53,7 +53,7 @@ const Home = () => {
           router.push("/chat");
       }if( localStorage.getItem("token") ){
         //console.log( localStorage.getItem("token") );
-        validarToken( localStorage.getItem("token") );
+        validarToken();
       }
   }, [autenticado])
 

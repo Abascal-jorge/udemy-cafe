@@ -22,9 +22,7 @@ const AuthState = ({children}) => {
         try {
 
            const url =  `${process.env.backendURL}/api/auth/google`;
-
            //console.log( url );
-
            const respuesta = await axios.post(url, {id_token});
 
            dispatch({
@@ -51,8 +49,8 @@ const AuthState = ({children}) => {
         }
     }
 
-    const validarToken = async ( token ) => {
-
+    const validarToken = async ( ) => {
+        const token = localStorage.getItem("token");
         try {
             const url = `${process.env.backendURL}/api/auth`;
             const respuesta = await axios(url, {
@@ -64,7 +62,7 @@ const AuthState = ({children}) => {
                 payload: respuesta.data
             });
         } catch (error) {
-            console.log("Token no valido, no existe token");
+            console.log(error.response.data);
         }
     }
 

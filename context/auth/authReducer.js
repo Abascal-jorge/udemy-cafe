@@ -9,6 +9,7 @@ export default (state, action) => {
         case AUTENTICADO_CORREO:
         case VALIDAR_TOKEN:
             localStorage.setItem("token", action.payload.token);
+            //localStorage.setItem("usuario", JSON.stringify(action.payload.usuario));
             return{
                 ...state,
                 autenticado: true,
