@@ -137,22 +137,27 @@ const chatMensajes = () => {
     //let nombre = "jorge", correo="sdas", img = null;
     const { nombre, correo, img } = usuario;
     let spinner = true;
-    //const { nombre, correo, img } = usuario;
-    //const nombre = "jorge", correo="sdas", img = null;
 
     //////////////////////Socket configuration//////////////
-    /*const PORTServidor = process.env.backendURL;
+    const PORTServidor = process.env.backendURL;
     const socket = io(PORTServidor, {
         "extraHeaders" : { "x-token" : localStorage.getItem("token")}
     });
-
-    
-    socket.on("connect", () => {
-        console.log("Conectado desde froent end");
+    //
+    socket.on("recibir-mensajes", () => {
+        //Logica
     });
 
-    socket.emit("Mensaje", { mensaje: "Hola" });
-    //fin sockets*/
+    socket.on("usuarios-activos", ( payload ) => {
+        //Logica
+        console.log("hola desde payload", payload);
+        //console.log( payload );
+    });
+
+    socket.on("mensaje-privado", () => {
+        //Logica
+    })
+
 
     return (
         <> 
