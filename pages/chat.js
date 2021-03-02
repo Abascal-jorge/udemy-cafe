@@ -133,16 +133,20 @@ const SectionPrincipal = styled.section`
 const chatMensajes = () => {
 
     const AuthContext = useContext( authContext );
-    const { usuario, autenticado } = AuthContext;
+    const { usuario, autenticado, validarToken } = AuthContext;
+    //let nombre = "jorge", correo="sdas", img = null;
     const { nombre, correo, img } = usuario;
+    let spinner = true;
+    //const { nombre, correo, img } = usuario;
+    //const nombre = "jorge", correo="sdas", img = null;
 
     //////////////////////Socket configuration//////////////
-    const PORTServidor = process.env.backendURL;
+    /*const PORTServidor = process.env.backendURL;
     const socket = io(PORTServidor, {
         "extraHeaders" : { "x-token" : localStorage.getItem("token")}
     });
 
-    /*
+    
     socket.on("connect", () => {
         console.log("Conectado desde froent end");
     });
@@ -152,42 +156,46 @@ const chatMensajes = () => {
 
     return (
         <> 
-                <PanelVerde>
-                </PanelVerde>
-                <SectionPrincipal className="chat-section">
-                    <div className="info-usuario">
-                        <h2>{nombre}</h2>
-                        <p>Correo: {correo}</p>
-                        <img src={ img ? img : "/perfil.png"}/>
-                    </div>
-                    <div className="chat-area">
-                        <div className="area-contactos">
-                            <p>Contactos</p>
-                            <div className="contactos-list">
-                                <ul>
-                                    <li>Manuel Abascal</li>
-                                    <li>Juan arturo coboj</li>
-                                    <li>Elias enrique</li>
-                                    <li>Valeria</li>
-                                    <li>Karla</li>
-                                </ul>
+                { spinner ?
+                 <>
+                    <PanelVerde>
+                    </PanelVerde>
+                    <SectionPrincipal className="chat-section">
+                        <div className="info-usuario">
+                            <h2>{nombre}</h2>
+                            <p>Correo: {correo}</p>
+                            <img src={ img ? img : "/perfil.png"}/>
+                        </div>
+                        <div className="chat-area">
+                            <div className="area-contactos">
+                                <p>Contactos</p>
+                                <div className="contactos-list">
+                                    <ul>
+                                        <li>Manuel Abascal</li>
+                                        <li>Juan arturo coboj</li>
+                                        <li>Elias enrique</li>
+                                        <li>Valeria</li>
+                                        <li>Karla</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="area-mensajes">
+                                <div className="historial">
+                                    <p>Campo</p>
+                                </div>
+                                <div className="envios-nuevos">
+                                    <form>
+                                        <div className="mensajes-enviar">
+                                            <textarea></textarea>
+                                            <input type="submit" value="Enviar mensaje"/>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        <div className="area-mensajes">
-                            <div className="historial">
-                                <p>Campo</p>
-                            </div>
-                            <div className="envios-nuevos">
-                                <form>
-                                    <div className="mensajes-enviar">
-                                        <textarea></textarea>
-                                        <input type="submit" value="Enviar mensaje"/>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </SectionPrincipal>
+                    </SectionPrincipal>
+                  </>
+                : null }
         </>
      );
 }

@@ -31,12 +31,12 @@ const Home = () => {
       });
   }
 
-  const onSubmitDatos = (e) => {
+  const onSubmitDatos = async (e) => {
       e.preventDefault();
-      iniciandoCorreo(datos);
+      await iniciandoCorreo(datos);
   }
 
-  const responseGoogle = googleUser => {
+  const responseGoogle = async googleUser => {
     /*let profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
@@ -45,7 +45,7 @@ const Home = () => {
     */
     const id_token = googleUser.getAuthResponse().id_token;
     //console.log(id_token);
-    iniciandoGoogle( id_token );
+    await iniciandoGoogle( id_token );
   }
 
   useEffect(() => {
