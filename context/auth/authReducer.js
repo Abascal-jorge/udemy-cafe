@@ -1,6 +1,7 @@
 import { AUTENTICANDO_GOOGLE, 
          AUTENTICADO_CORREO, 
-         VALIDAR_TOKEN } from "../../type/index";
+         VALIDAR_TOKEN,
+         ELIMINAR_SESION } from "../../type/index";
 
 
 export default (state, action) => {
@@ -19,6 +20,13 @@ export default (state, action) => {
                 ...state,
                 autenticado: true,
                 usuario: action.payload.usuario
+            }
+        case ELIMINAR_SESION:
+            localStorage.removeItem("token");
+            return{
+                ...state,
+                autenticado: false,
+                usuario: null
             }
         default:
             return;

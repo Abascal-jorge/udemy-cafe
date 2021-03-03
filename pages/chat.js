@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import styled from "@emotion/styled";
 import authContext from '../context/auth/authContext';
 import io from "socket.io-client";
+import { route } from 'next/dist/next-server/server/router';
+import { useRouter } from 'next/router'
 
 const PanelVerde = styled.div`
     width: 100%;
@@ -18,18 +20,48 @@ const SectionPrincipal = styled.section`
 
     .info-usuario{
         //border: 1px solid blue;
-        box-sizing: inherit;
-        padding: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #E5DDD5;
 
-        img{
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
+        h2{
+            margin: 0;
+            padding: 0 0 0 10px;
+        }
+
+        p{
+            margin: 0;
+            padding: 0;
+        }
+
+        .perfil-salir{
+            display: flex;
+            align-items: center;
+
+            button{
+                display: inline-block;
+                height: 30px;
+                margin: 0 10px;
+                width: 100px;
+                outline: none;
+                border: 2px solid crimson;
+                background-color: crimson;
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                &:hover{
+                    background: none;
+                    color: black;
+                }
+            }
+
+            img{
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
         }
     }
 
@@ -131,14 +163,15 @@ const SectionPrincipal = styled.section`
 `;
 
 const chatMensajes = () => {
-
+    const router = useRouter();
     const AuthContext = useContext( authContext );
-    const { usuario, autenticado, validarToken } = AuthContext;
+    const { usuario, autenticado, validarToken, cerrarSesion } = AuthContext;
     //let nombre = "jorge", correo="sdas", img = null;
     const { nombre, correo, img } = usuario;
     let spinner = true;
 
     //////////////////////Socket configuration//////////////
+    
     const PORTServidor = process.env.backendURL;
     const socket = io(PORTServidor, {
         "extraHeaders" : { "x-token" : localStorage.getItem("token")}
@@ -156,7 +189,14 @@ const chatMensajes = () => {
 
     socket.on("mensaje-privado", () => {
         //Logica
-    })
+    });
+
+    const clickButton = () => {
+        console.log( usuario.uid )
+        /*socket.emit("desconectar-sesion", { id : usuario.uid});
+        cerrarSesion();
+        router.push("/");*/
+    }
 
 
     return (
@@ -169,7 +209,12 @@ const chatMensajes = () => {
                         <div className="info-usuario">
                             <h2>{nombre}</h2>
                             <p>Correo: {correo}</p>
-                            <img src={ img ? img : "/perfil.png"}/>
+                            <div className="perfil-salir">
+                                <img src={ img ? img : "/perfil.png"}/>
+                                <button
+                                    onClick={clickButton}
+                                >Salir</button>
+                            </div>
                         </div>
                         <div className="chat-area">
                             <div className="area-contactos">

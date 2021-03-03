@@ -3,7 +3,8 @@ import authContext from "./authContext";
 import authReducer from "./authReducer";
 import { AUTENTICANDO_GOOGLE, 
          AUTENTICADO_CORREO,
-         VALIDAR_TOKEN} from "../../type/index";
+         VALIDAR_TOKEN,
+         ELIMINAR_SESION} from "../../type/index";
 import axios from "axios";
 
 
@@ -66,6 +67,12 @@ const AuthState = ({children}) => {
         }
     }
 
+    const cerrarSesion = () => {
+        dispatch({
+            type: ELIMINAR_SESION
+        });
+    }
+
     return ( 
         <authContext.Provider
             value = {
@@ -74,7 +81,8 @@ const AuthState = ({children}) => {
                     usuario: state.usuario,
                     iniciandoGoogle,
                     iniciandoCorreo,
-                    validarToken
+                    validarToken,
+                    cerrarSesion
                 }
             }
         >
