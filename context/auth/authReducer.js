@@ -1,7 +1,8 @@
 import { AUTENTICANDO_GOOGLE, 
          AUTENTICADO_CORREO, 
          VALIDAR_TOKEN,
-         ELIMINAR_SESION } from "../../type/index";
+         ELIMINAR_SESION,
+         ACTIVOS_USUARIOS} from "../../type/index";
 
 
 export default (state, action) => {
@@ -27,6 +28,11 @@ export default (state, action) => {
                 ...state,
                 autenticado: false,
                 usuario: null
+            }
+        case ACTIVOS_USUARIOS:
+            return{
+                ...state,
+                activos: action.payload
             }
         default:
             return;

@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import styled from "@emotion/styled";
 import authContext from '../context/auth/authContext';
 import io from "socket.io-client";
-import { route } from 'next/dist/next-server/server/router';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import ListadoUsuario from "../components/chat-mensajes/listadoUsuarios";
+import { unmountComponentAtNode } from 'react-dom';
 
 const PanelVerde = styled.div`
     width: 100%;
@@ -165,40 +166,37 @@ const SectionPrincipal = styled.section`
 const chatMensajes = () => {
     const router = useRouter();
     const AuthContext = useContext( authContext );
-    const { usuario, autenticado, validarToken, cerrarSesion } = AuthContext;
-    //let nombre = "jorge", correo="sdas", img = null;
-    const { nombre, correo, img } = usuario;
+    const { usuario, autenticado, activos, validarToken, cerrarSesion, usuariosActivos} = AuthContext;
+    let nombre = "jorge", correo="sdas", img = null;
+    //const { nombre, correo, img } = usuario;
     let spinner = true;
+    let activosUsa = null;
 
+    const enviarActivos = ( activosUser ) => {
+        console.log( activosUser.activos );
+        //usuariosActivos();
+    }
     //////////////////////Socket configuration//////////////
-    
     const PORTServidor = process.env.backendURL;
     const socket = io(PORTServidor, {
         "extraHeaders" : { "x-token" : localStorage.getItem("token")}
     });
     //
-    socket.on("recibir-mensajes", () => {
+    socket.on("recibir-mensajes", (arg1) => {
         //Logica
+        console.log(arg1);
     });
 
-    socket.on("usuarios-activos", ( payload ) => {
-        //Logica
-        console.log("hola desde payload", payload);
-        //console.log( payload );
-    });
+    socket.on("usuarios-activos", enviarActivos );
 
     socket.on("mensaje-privado", () => {
         //Logica
     });
 
     const clickButton = () => {
-        console.log( usuario.uid )
-        /*socket.emit("desconectar-sesion", { id : usuario.uid});
-        cerrarSesion();
-        router.push("/");*/
+        //cerrarSesion();
+        console.log("Cerrar sesion");
     }
-
-
     return (
         <> 
                 { spinner ?
@@ -219,15 +217,7 @@ const chatMensajes = () => {
                         <div className="chat-area">
                             <div className="area-contactos">
                                 <p>Contactos</p>
-                                <div className="contactos-list">
-                                    <ul>
-                                        <li>Manuel Abascal</li>
-                                        <li>Juan arturo coboj</li>
-                                        <li>Elias enrique</li>
-                                        <li>Valeria</li>
-                                        <li>Karla</li>
-                                    </ul>
-                                </div>
+                                <ListadoUsuario/>
                             </div>
                             <div className="area-mensajes">
                                 <div className="historial">

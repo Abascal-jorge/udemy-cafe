@@ -4,7 +4,8 @@ import authReducer from "./authReducer";
 import { AUTENTICANDO_GOOGLE, 
          AUTENTICADO_CORREO,
          VALIDAR_TOKEN,
-         ELIMINAR_SESION} from "../../type/index";
+         ELIMINAR_SESION,
+         ACTIVOS_USUARIOS} from "../../type/index";
 import axios from "axios";
 
 
@@ -14,7 +15,8 @@ const AuthState = ({children}) => {
         token: typeof window !== "undefined" ? localStorage.getItem("token") : "",
         autenticado: null,
         usuario: null,
-        mensaje: null
+        mensaje: null,
+        activos: null
     }
 
     const [ state, dispatch ] = useReducer(authReducer, initialState);
@@ -73,16 +75,25 @@ const AuthState = ({children}) => {
         });
     }
 
+    const usuariosActivos = (activos) => {
+        dispatch({
+            type: ACTIVOS_USUARIOS,
+            payload: activos
+        });
+    }
+
     return ( 
         <authContext.Provider
             value = {
                 {   
                     autenticado: state.autenticado,
                     usuario: state.usuario,
+                    activos: state.activos,
                     iniciandoGoogle,
                     iniciandoCorreo,
                     validarToken,
-                    cerrarSesion
+                    cerrarSesion,
+                    usuariosActivos
                 }
             }
         >
