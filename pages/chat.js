@@ -169,7 +169,6 @@ const chatMensajes = () => {
     const { usuario, autenticado, activos, validarToken, cerrarSesion, usuariosActivos} = AuthContext;
     let nombre = "jorge", correo="sdas", img = null;
     //const { nombre, correo, img } = usuario;
-    let spinner = true;
     let activosUsa = null;
 
     const enviarActivos = ( activosUser ) => {
@@ -182,7 +181,7 @@ const chatMensajes = () => {
         "extraHeaders" : { "x-token" : localStorage.getItem("token")}
     });
     //
-    socket.on("recibir-mensajes", (arg1) => {
+    socket.on("recibir-mensajes", ( arg1 ) => {
         //Logica
         console.log(arg1);
     });
@@ -198,45 +197,43 @@ const chatMensajes = () => {
         console.log("Cerrar sesion");
     }
     return (
-        <> 
-                { spinner ?
-                 <>
-                    <PanelVerde>
-                    </PanelVerde>
-                    <SectionPrincipal className="chat-section">
-                        <div className="info-usuario">
-                            <h2>{nombre}</h2>
-                            <p>Correo: {correo}</p>
-                            <div className="perfil-salir">
-                                <img src={ img ? img : "/perfil.png"}/>
-                                <button
-                                    onClick={clickButton}
-                                >Salir</button>
-                            </div>
+
+        <>
+            <PanelVerde>
+            </PanelVerde>
+            <SectionPrincipal className="chat-section">
+                <div className="info-usuario">
+                    <h2>{nombre}</h2>
+                    <p>Correo: {correo}</p>
+                    <div className="perfil-salir">
+                        <img src={ img ? img : "/perfil.png"}/>
+                        <button
+                            onClick={clickButton}
+                        >Salir</button>
+                    </div>
+                </div>
+                <div className="chat-area">
+                    <div className="area-contactos">
+                        <p>Contactos</p>
+                        <ListadoUsuario/>
+                    </div>
+                    <div className="area-mensajes">
+                        <div className="historial">
+                            <p>Campo</p>
                         </div>
-                        <div className="chat-area">
-                            <div className="area-contactos">
-                                <p>Contactos</p>
-                                <ListadoUsuario/>
-                            </div>
-                            <div className="area-mensajes">
-                                <div className="historial">
-                                    <p>Campo</p>
+                        <div className="envios-nuevos">
+                            <form>
+                                <div className="mensajes-enviar">
+                                    <textarea></textarea>
+                                    <input type="submit" value="Enviar mensaje"/>
                                 </div>
-                                <div className="envios-nuevos">
-                                    <form>
-                                        <div className="mensajes-enviar">
-                                            <textarea></textarea>
-                                            <input type="submit" value="Enviar mensaje"/>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </SectionPrincipal>
-                  </>
-                : null }
+                    </div>
+                </div>
+            </SectionPrincipal>
         </>
+
      );
 }
  
