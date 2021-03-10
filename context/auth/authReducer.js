@@ -30,9 +30,9 @@ export default (state, action) => {
                 usuario: null
             }
         case ACTIVOS_USUARIOS:
+            console.log(action.payload);
             return{
-                ...state,
-                activos: action.payload
+                ...state
             }
         default:
             return;

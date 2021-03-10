@@ -10,7 +10,7 @@ let socket;
 const chatMensajes = () => {
     const router = useRouter();
     const AuthContext = useContext( authContext );
-    const { usuario, autenticado, activos, validarToken, cerrarSesion, usuariosActivos} = AuthContext;
+    const { usuario, autenticado, activos, validarToken, cerrarSesion, usuarioConectados} = AuthContext;
     //let nombre = "jorge", correo="sdas", img = null;
     const { nombre, correo, img } = usuario;
 
@@ -26,17 +26,20 @@ const chatMensajes = () => {
     });
 
     socket.on("usuarios-activos", ( datos ) => {
-        //usuariosActivos(datos.activos);
+        usuarioConectados(datos.activos);
     } );
 
     socket.on("mensaje-privado", () => {
         //Logica
     });
 
+    //////////////Clcik en boton cerrar ///////////////
     const clickButton = () => {
         //cerrarSesion();
         console.log("Cerrar sesion");
     }
+    ////////////////////////////////////////////////////
+
     return (
 
         <>

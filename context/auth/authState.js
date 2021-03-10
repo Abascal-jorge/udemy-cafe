@@ -75,11 +75,13 @@ const AuthState = ({children}) => {
         });
     }
 
-    const usuariosActivos = (activos) => {
-        dispatch({
+
+    const usuarioConectados = (activos) => {
+        console.log(activos);
+        /*ispatch({
             type: ACTIVOS_USUARIOS,
             payload: activos
-        });
+        });*/
     }
 
     return ( 
@@ -93,7 +95,7 @@ const AuthState = ({children}) => {
                     iniciandoCorreo,
                     validarToken,
                     cerrarSesion,
-                    usuariosActivos
+                    usuarioConectados
                 }
             }
         >
