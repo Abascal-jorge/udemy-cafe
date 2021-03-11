@@ -78,7 +78,7 @@ const AuthState = ({children}) => {
 
     const usuarioConectados = (activos) => {
         console.log(activos);
-        /*ispatch({
+        /*dispatch({
             type: ACTIVOS_USUARIOS,
             payload: activos
         });*/
