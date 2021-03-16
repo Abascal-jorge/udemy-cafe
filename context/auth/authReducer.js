@@ -2,7 +2,7 @@ import { AUTENTICANDO_GOOGLE,
          AUTENTICADO_CORREO, 
          VALIDAR_TOKEN,
          ELIMINAR_SESION,
-         ACTIVOS_USUARIOS} from "../../type/index";
+         LISTADO_USUARIOS} from "../../type/index";
 
 
 export default (state, action) => {
@@ -29,10 +29,11 @@ export default (state, action) => {
                 autenticado: false,
                 usuario: null
             }
-        case ACTIVOS_USUARIOS:
+        case LISTADO_USUARIOS:
             console.log(action.payload);
             return{
-                ...state
+                ...state,
+                activos: action.payload
             }
         default:
             return;

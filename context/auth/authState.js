@@ -5,7 +5,7 @@ import { AUTENTICANDO_GOOGLE,
          AUTENTICADO_CORREO,
          VALIDAR_TOKEN,
          ELIMINAR_SESION,
-         ACTIVOS_USUARIOS} from "../../type/index";
+         LISTADO_USUARIOS} from "../../type/index";
 import axios from "axios";
 
 
@@ -75,13 +75,12 @@ const AuthState = ({children}) => {
         });
     }
 
-
-    const usuarioConectados = (activos) => {
-        console.log(activos);
-        /*dispatch({
-            type: ACTIVOS_USUARIOS,
-            payload: activos
-        });*/
+    const listarUsuario = (datos) => {
+        //console.log(datos);
+        dispatch({
+            type: LISTADO_USUARIOS,
+            payload: datos.activos
+        });
     }
 
     return ( 
@@ -95,7 +94,7 @@ const AuthState = ({children}) => {
                     iniciandoCorreo,
                     validarToken,
                     cerrarSesion,
-                    usuarioConectados
+                    listarUsuario
                 }
             }
         >

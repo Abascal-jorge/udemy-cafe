@@ -10,29 +10,35 @@ let socket;
 const chatMensajes = () => {
     const router = useRouter();
     const AuthContext = useContext( authContext );
-    const { usuario, autenticado, activos, validarToken, cerrarSesion, usuarioConectados} = AuthContext;
+    const { usuario, autenticado, activos, listarUsuario } = AuthContext;
     //let nombre = "jorge", correo="sdas", img = null;
     const { nombre, correo, img } = usuario;
-
     //////////////////////Socket configuration//////////////
     const PORTServidor = process.env.backendURL;
-    socket = io(PORTServidor, {
-        "extraHeaders" : { "x-token" : localStorage.getItem("token")}
-    });
-    //
-    socket.on("recibir-mensajes", ( arg1 ) => {
-        //Logica
-        console.log(arg1);
-    });
 
-    socket.on("usuarios-activos", ( datos ) => {
-        usuarioConectados(datos.activos);
-    } );
+    useEffect(() => {
+        socket = io(PORTServidor, {
+            "extraHeaders" : { "x-token" : localStorage.getItem("token")}
+        });
+        //
+        socket.on("recibir-mensajes", ( arg1 ) => {
+            //Logica
+            console.log(arg1);
+        });
+    
+        socket.on("usuarios-activos", ( datos ) => {
+            //usuarioConectados(datos.activos);
+            listarUsuario(datos);
+        } );
+    
+        socket.on("mensaje-privado", () => {
+            //Logica
+        });
 
-    socket.on("mensaje-privado", () => {
-        //Logica
-    });
-
+        return () => {
+            socket.off("usuarios-activos");
+        };
+    }, [ ]);
     //////////////Clcik en boton cerrar ///////////////
     const clickButton = () => {
         //cerrarSesion();
