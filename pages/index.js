@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 const Home = () => {
   const router = useRouter();
-  //Context Funciones authState
+  //Context Funciones authState  
   const AuthContext = useContext(authContext);
   const { iniciandoGoogle, 
           iniciandoCorreo, 

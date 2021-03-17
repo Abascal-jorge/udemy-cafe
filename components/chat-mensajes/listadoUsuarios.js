@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import authContext from "../../context/auth/authContext";
+import UsuariosActivos from "./usuariosActivos";
 
-const ListadoUsuario = ( ) => {
+const ListadoUsuario = () => {
 
     const AuthContext = useContext(authContext);
     const { activos } = AuthContext;
@@ -10,10 +11,12 @@ const ListadoUsuario = ( ) => {
         <div className="contactos-list">
             <ul>
                 { activos &&
-                    activos.map( datos => {
-                        console.log(datos.nombre);
-                        <li>{datos.nombre}</li>
-                    })
+                    activos.map( datos => (
+                        <UsuariosActivos
+                            datos = {datos}
+                            key = { datos.uid }
+                        />
+                    ))
                 }
             </ul>
         </div>

@@ -132,18 +132,18 @@ export const SectionPrincipal = styled.section`
                 margin: 0;
             }
 
-            .mensajes-enviar textarea{
+            .mensajes-enviar input[type="text"]{
                 width: 100%;
                 height: 30px;
-                padding: 0;
-                resize: none;
+                outline: none;
+                padding: 15px 120px 15px 5px;
                 border-radius: 6px;
                 border: 2px solid #eee;
             }
 
-            .envios-nuevos form input{
+            .envios-nuevos form input[type="submit"]{
                 position: absolute;
-                top: 2px;
+                top: 4px;
                 right: 2px;
                 outline: none;
                 appearance: none;

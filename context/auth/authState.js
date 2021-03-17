@@ -5,7 +5,8 @@ import { AUTENTICANDO_GOOGLE,
          AUTENTICADO_CORREO,
          VALIDAR_TOKEN,
          ELIMINAR_SESION,
-         LISTADO_USUARIOS} from "../../type/index";
+         LISTADO_USUARIOS,
+         LISTADO_MENSAJE} from "../../type/index";
 import axios from "axios";
 
 
@@ -83,6 +84,13 @@ const AuthState = ({children}) => {
         });
     }
 
+    const listarMensaje = (mensajes) => {
+        dispatch({
+            type: LISTADO_MENSAJE,
+            payload: mensajes
+        });
+    }
+
     return ( 
         <authContext.Provider
             value = {
@@ -90,11 +98,13 @@ const AuthState = ({children}) => {
                     autenticado: state.autenticado,
                     usuario: state.usuario,
                     activos: state.activos,
+                    mensaje: state.mensaje,
                     iniciandoGoogle,
                     iniciandoCorreo,
                     validarToken,
                     cerrarSesion,
-                    listarUsuario
+                    listarUsuario,
+                    listarMensaje
                 }
             }
         >
