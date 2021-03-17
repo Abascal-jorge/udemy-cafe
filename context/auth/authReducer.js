@@ -30,7 +30,6 @@ export default (state, action) => {
                 usuario: null
             }
         case LISTADO_USUARIOS:
-            console.log(action.payload);
             return{
                 ...state,
                 activos: action.payload

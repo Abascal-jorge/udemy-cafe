@@ -4,11 +4,17 @@ import authContext from "../../context/auth/authContext";
 const ListadoUsuario = ( ) => {
 
     const AuthContext = useContext(authContext);
-    const {} = AuthContext;
+    const { activos } = AuthContext;
+    
     return ( 
         <div className="contactos-list">
             <ul>
-                <li>Jorge Abascal López</li>
+                { activos &&
+                    activos.map( datos => {
+                        console.log(datos.nombre);
+                        <li>{datos.nombre}</li>
+                    })
+                }
             </ul>
         </div>
      );

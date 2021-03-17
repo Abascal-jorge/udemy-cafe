@@ -65,7 +65,9 @@ const chatMensajes = () => {
                 <div className="chat-area">
                     <div className="area-contactos">
                         <p>Contactos</p>
-                        <ListadoUsuario/>
+                        {activos &&
+                            <ListadoUsuario/>
+                        }
                     </div>
                     <div className="area-mensajes">
                         <div className="historial">
