@@ -4,12 +4,12 @@ import authContext from "../../context/auth/authContext";
 const UsuariosActivos = ( { datos } ) => {
 
     const AuthContext = useContext(authContext);
-    const { usuario } = AuthContext;
+    const { usuario, usuarioPrivado } = AuthContext;
 
     return ( 
-        <>
+        <>  
             { usuario.uid !=  datos.uid &&
-                <li>
+                <li  onClick= { () => usuarioPrivado( { uid: datos.uid, nombre: datos.nombre } ) }>
                     {datos.nombre}
                 </li>
             }

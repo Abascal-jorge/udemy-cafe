@@ -21,14 +21,25 @@ const MensajesTexto = styled.p`
 const Mensajes = () => {
 
     const AuthContext = useContext( authContext );
-    const { mensaje } = AuthContext;
+    const { mensaje, privado, smsPrivado } = AuthContext;
     
     return ( 
-        <>
-            { mensaje &&
-                mensaje.map( info => (
-                    <MensajesTexto> { info.mensaje } <span>{info.nombre}</span></MensajesTexto>
-                ))
+        <>  
+            { privado.uid === "" ?
+                mensaje &&
+                    mensaje.map( info => (
+                        <MensajesTexto> 
+                            { info.mensaje } <span>{info.nombre}</span>
+                        </MensajesTexto>
+                    ))
+                :
+                smsPrivado.length > 0 &&
+                    smsPrivado[0].uidRemitente === privado.uid &&
+                    smsPrivado.map( men => (
+                        <MensajesTexto>
+                            { men.mensaje } <span>{men.de}</span>
+                        </MensajesTexto>
+                    ))
             }
         </>
      );

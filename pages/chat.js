@@ -11,8 +11,8 @@ let socket;
 const chatMensajes = () => {
     const router = useRouter();
     const AuthContext = useContext( authContext );
-    const { usuario, autenticado, listarUsuario, listarMensaje } = AuthContext;
-    const { nombre, correo, img, uid } = usuario;
+    const { usuario, autenticado, privado, listarUsuario, listarMensaje, mensajesPrivados} = AuthContext;
+    const { nombre, correo, img } = usuario;
     const [mensaje, setMensaje] = useState("");
     const [alerta, setAlerta] = useState(false);
     //////////////////////Socket configuration//////////////
@@ -34,7 +34,7 @@ const chatMensajes = () => {
     
         socket.on("mensaje-privado", ( payload ) => {
             //Logica
-            console.log(payload);
+            mensajesPrivados(payload);
         });0
 
         return () => {
@@ -55,8 +55,7 @@ const chatMensajes = () => {
             return;
         }
         setAlerta(false);
-        socket.emit("mensaje-nuevo", { uid: "604918720cebb31740a11911", nombre: "Spyder pc", mensaje });
-        //socket.broadcast.emit("mensaje-nuevo", { mensaje });
+        socket.emit("mensaje-nuevo", { uid: privado.uid, nombre: privado.nombre, mensaje });
         setMensaje("");
     }
 
@@ -82,7 +81,7 @@ const chatMensajes = () => {
                     </div>
                     <div className="area-mensajes">
                         <div className="historial">
-                            <Mensajes/>
+                                <Mensajes/>
                         </div>
                         <div className="envios-nuevos">
                             <form onSubmit={ onSubmitMensaje }>

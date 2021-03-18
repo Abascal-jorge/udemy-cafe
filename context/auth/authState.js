@@ -6,7 +6,9 @@ import { AUTENTICANDO_GOOGLE,
          VALIDAR_TOKEN,
          ELIMINAR_SESION,
          LISTADO_USUARIOS,
-         LISTADO_MENSAJE} from "../../type/index";
+         LISTADO_MENSAJE,
+         USUARIO_PRIVADOS,
+         MENSAJES_PRIVADOS} from "../../type/index";
 import axios from "axios";
 
 
@@ -16,12 +18,18 @@ const AuthState = ({children}) => {
         token: typeof window !== "undefined" ? localStorage.getItem("token") : "",
         autenticado: null,
         usuario: null,
-        mensaje: null,
-        activos: null
+        mensaje: [],
+        smsPrivado: [],
+        activos: null,
+        privado: {
+            uid: "",
+            nombre: ""
+        }
     }
 
     const [ state, dispatch ] = useReducer(authReducer, initialState);
 
+    //Iniciando sesion con google cuenta gmail
     const iniciandoGoogle = async (id_token) => {
         try {
 
@@ -39,6 +47,7 @@ const AuthState = ({children}) => {
         }
     }
 
+    //Iniciando sesion con correo registrado
     const iniciandoCorreo = async ( datos ) => {
         try {   
             const url = `${process.env.backendURL}/api/auth/login`;
@@ -53,6 +62,7 @@ const AuthState = ({children}) => {
         }
     }
 
+    //Validando token, si existe uno ridecciona al page chat
     const validarToken = async ( ) => {
         const token = localStorage.getItem("token");
         try {
@@ -70,13 +80,15 @@ const AuthState = ({children}) => {
         }
     }
 
+    //Cerrar sesion correo
     const cerrarSesion = () => {
         dispatch({
             type: ELIMINAR_SESION
         });
     }
 
-    const listarUsuario = (datos) => {
+    //Listar usuarios activos agrega, o quita al usuario si se desconecta
+    const listarUsuario = datos => {
         //console.log(datos);
         dispatch({
             type: LISTADO_USUARIOS,
@@ -84,10 +96,27 @@ const AuthState = ({children}) => {
         });
     }
 
-    const listarMensaje = (mensajes) => {
+    //Listar mensajes globales que recciben todos
+    const listarMensaje = mensajes => {
         dispatch({
             type: LISTADO_MENSAJE,
             payload: mensajes
+        });
+    }
+
+    //Agregar usuario privados, seleccionando usuario
+    const usuarioPrivado = ( datos ) => {
+        dispatch({
+            type: USUARIO_PRIVADOS,
+            payload: datos
+        });
+    }
+
+    //MensajesPrivados por usuario
+    const mensajesPrivados = (datos) => {
+        dispatch({
+            type: MENSAJES_PRIVADOS,
+            payload: datos
         });
     }
 
@@ -99,12 +128,16 @@ const AuthState = ({children}) => {
                     usuario: state.usuario,
                     activos: state.activos,
                     mensaje: state.mensaje,
+                    privado: state.privado,
+                    smsPrivado: state.smsPrivado,
                     iniciandoGoogle,
                     iniciandoCorreo,
                     validarToken,
                     cerrarSesion,
                     listarUsuario,
-                    listarMensaje
+                    listarMensaje,
+                    usuarioPrivado,
+                    mensajesPrivados
                 }
             }
         >

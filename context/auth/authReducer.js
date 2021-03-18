@@ -3,7 +3,9 @@ import { AUTENTICANDO_GOOGLE,
          VALIDAR_TOKEN,
          ELIMINAR_SESION,
          LISTADO_USUARIOS,
-         LISTADO_MENSAJE} from "../../type/index";
+         LISTADO_MENSAJE,
+         USUARIO_PRIVADOS,
+         MENSAJES_PRIVADOS} from "../../type/index";
 
 
 export default (state, action) => {
@@ -39,6 +41,16 @@ export default (state, action) => {
             return{
                 ...state,
                 mensaje: action.payload
+            }
+        case USUARIO_PRIVADOS:
+            return{
+                ...state,
+                privado: action.payload
+            }
+        case MENSAJES_PRIVADOS:
+            return{
+                ...state,
+                smsPrivado: action.payload.mensajesPrivados
             }
         default:
             return;
