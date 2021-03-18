@@ -32,9 +32,10 @@ const chatMensajes = () => {
             listarUsuario(datos);
         } );
     
-        socket.on("mensaje-privado", () => {
+        socket.on("mensaje-privado", ( payload ) => {
             //Logica
-        });
+            console.log(payload);
+        });0
 
         return () => {
             socket.off("usuarios-activos");
@@ -54,7 +55,7 @@ const chatMensajes = () => {
             return;
         }
         setAlerta(false);
-        socket.emit("mensaje-nuevo", { uid, nombre, mensaje });
+        socket.emit("mensaje-nuevo", { uid: "604918720cebb31740a11911", nombre: "Spyder pc", mensaje });
         //socket.broadcast.emit("mensaje-nuevo", { mensaje });
         setMensaje("");
     }
